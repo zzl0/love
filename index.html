@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Love</title>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=7ynCSut8ATemfdUqd4Aawh76"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="text/javascript" src="js/screenfull.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+</head>
+
+<body>
+  <button id="start_btn" class="btn btn-primary btn-large centered">START</button>
+  <div id="map_canvas" style="width:100%; height:100%;"></div>
+  <div id="curtain"></div>
+  <div id="end_text" class="centered" style="margin-left: -250px">Happy Birthday, My Rita.</div>
+  <audio preload="auto" id="music">
+    <source src="music/dadada.ogg" type="audio/ogg" />
+    <source src="music/dadada.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script type="text/javascript">
+    !function() {
+      $("#start_btn").click(function () {
+        screenfull & screenfull.request();
+        $(this).remove();
+        init();
+      })
+
+      var map;
+
+      // 地点
+      var qiShan = new BMap.Point(107.688, 34.410);
+      var boyIcon = BMap.Icon("http://maps.gstatic.com/mapfiles/ms2/micons/ -dot.png", new BMap.Size(30, 30));
+      var girlIcon = BMap.Icon("http://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png", new BMap.Size(30, 30));
+
+      function init() {
+        map = new BMap.Map("map_canvas");
+        map.centerAndZoom(qiShan, 6);
+        var boy = new BMap.Marker(qiShan, {icon: boyIcon});
+        map.addOverlay(boy);
+        // var girl = new BMap.Marker(qiShan, {icon: girlIcon});
+        // map.addOverlay(girl);
+      }
+    }();
+  </script>
+</body>
+</html>

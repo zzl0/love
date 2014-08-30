@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Love</title>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&ak=7ynCSut8ATemfdUqd4Aawh76"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="text/javascript" src="js/screenfull.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/InfoBox_min.js"></script>
+</head>
+
+<body>
+  <div id="map_canvas" style="width:100%; height:100%;"></div>
+  <div id="curtain"></div>
+  <div id="end_text" class="centered" style="margin-left: -250px">Happy Birthday, My Rita.</div>
+  <audio preload="auto" id="music">
+    <source src="music/dadada.ogg" type="audio/ogg" />
+    <source src="music/dadada.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script type="text/javascript">
+    !function() {
+      var map;
+
+      // 地点
+      var qiShan = new BMap.Point(107.6312110000, 34.4469310000);
+      var xiAn = new BMap.Point(108.8813880000, 34.1432630000);
+      var changChun = new BMap.Point(125.2873520000, 43.8290560000);
+      var beiJing = new BMap.Point(116.4038740000, 39.9148890000);
+
+      var boyIcon = new BMap.Icon("photos/blue-dot.png", new BMap.Size(30, 30));
+      var girlIcon = new BMap.Icon("photos/red-dot.png", new BMap.Size(30, 30));
+
+      // $("#start_btn").click(function () {
+      //   screenfull & screenfull.request();
+      //   $(this).remove();
+
+      // })
+
+      function init() {
+        var music =  document.getElementById("music");
+        music.play();
+
+        map = new BMap.Map("map_canvas");
+        map.centerAndZoom(qiShan, 5);
+
+        // var mapStyle = {
+        //   style : "dark"  //设置地图风格为高端黑
+        // };
+        // map.setMapStyle(mapStyle);
+      }
+
+      function showPhotos() {
+        var photos = [
+          {
+            boyPoint: qiShan,
+            girlPoint: qiShan,
+            photoPoint: qiShan,
+            photoName: 'first_meet.jpeg',
+            text: "在这里相识、相知、相恋，高中的生活充满了很多美好的回忆",
+            title: '2013年7月--相遇'
+          },
+          {
+            boyPoint: changChun,
+            girlPoint: xiAn,
+            photoPoint: changChun,
+            photoName: 'chang_chun.jpeg',
+            text: "从2006年开始开始了异地恋，我们来往于彼此所在的城市",
+            title: '2009年7月--在长春'
+          },
+          // {
+          //   boyPoint: beiJing,
+          //   girlPoint: beiJing,
+          //   photoPoint: beiJing,
+          //   photoName: 'marry.jpeg',
+          //   text: "结婚了",
+          //   title: "2014-10--结婚"
+          // }
+        ];
+
+        var i = 0, len = photos.length;
+        var p = photos[0];
+        showPhoto(p.boyPoint, p.girlPoint, p.photoPoint, p.photoName, p.text, p.title);
+        i = 1;
+        var timeout = setInterval(function () {
+          var p = photos[i];
+          showPhoto(p.boyPoint, p.girlPoint, p.photoPoint, p.photoName, p.text, p.title);
+
+          if (++i == len) {
+            clearInterval(timeout);
+          }
+        }, 5000);
+      }
+
+      function showPhoto(boyPoint, girlPoint, photoPoint, photoName, text, title) {
+        map.clearOverlays();
+        var boy = new BMap.Marker(boyPoint, {icon: boyIcon});
+        map.addOverlay(boy);
+        var girl = new BMap.Marker(girlPoint, {icon: girlIcon});
+        map.addOverlay(girl);
+
+        var opts = {
+          title : title,
+        }
+        var sContent =
+          "<div class='love-img'>" +
+          "<div><img style='float:left; margin:4px' id='imgDemo' src='photos/" + photoName + "' width='400' height='auto' /></div>" +
+          "<div class='love-desc'>" + text + "</div>";
+          "</div>";
+
+        var infoWindow = new BMap.InfoWindow(sContent, opts);
+        map.openInfoWindow(infoWindow, photoPoint);
+
+        if (boyPoint == girlPoint) {
+          boy.setAnimation(BMAP_ANIMATION_BOUNCE);
+        }
+      }
+
+      init();
+      showPhotos();
+    }();
+  </script>
+</body>
+</html>

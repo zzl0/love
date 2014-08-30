@@ -1,116 +1,73 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Love</title>
-  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7ynCSut8ATemfdUqd4Aawh76"></script>
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script type="text/javascript" src="js/screenfull.min.js"></script>
-  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<title>Our Love Story</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<style type="text/css">
+		@font-face {
+			font-family: digit;
+			src: url('digital-7_mono.ttf') format("truetype");
+		}
+	</style>
+	<link href="css/default.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/garden.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
 </head>
 
 <body>
-  <button id="start_btn" class="btn btn-primary btn-large centered">START</button>
-  <div id="map_canvas" style="width:100%; height:100%;"></div>
-  <div id="curtain"></div>
-  <div id="end_text" class="centered" style="margin-left: -250px">Happy Birthday, My Rita.</div>
-  <audio preload="auto" id="music">
-    <source src="music/dadada.ogg" type="audio/ogg" />
-    <source src="music/dadada.mp3" type="audio/mpeg" />
-  </audio>
+	<div id="mainDiv">
+		<div id="content">
+			<div id="code">
+				<span class="space"/><span class="comments"> 2003年我们相识. </span><br />
+				<span class="space"/><span class="comments"> 2014年我们结婚了. </span><br />
+				</br>
+				<span class="space"/><span class="comments">
+					  点击<a href="moment.html" style="color:red;">这里</a>查看我们经历的重要时间点.
+				</span><br />
+			</div>
+			<div id="loveHeart">
+				<canvas id="garden"></canvas>
+				<div id="words">
+					<div id="messages">
+						亲爱的朋友, 我们的结婚日期为
+						<div id="elapseClock">
+							<span class="digit">2014</span> 年
+							<span class="digit">10</span> 月
+							<span class="digit">03</span> 日
+					</div>
+					<div id="loveu">
+						期待你的光临！<br/>
+						<div class="signature">- 李萍&朱兆龙</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="copyright">
+			Inspired by <a href="http://hackerzhou.me">hackerzhou.me</a> project.<br />
+		</div>
+	</div>
+	<script type="text/javascript">
+		var offsetX = $("#loveHeart").width() / 2;
+		var offsetY = $("#loveHeart").height() / 2 - 55;
 
-  <script type="text/javascript">
-    !function() {
-      var map;
+		if (!document.createElement('canvas').getContext) {
+			var msg = document.createElement("div");
+			msg.id = "errorMsg";
+			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
+			document.body.appendChild(msg);
+			$("#code").css("display", "none")
+			$("#copyright").css("position", "absolute");
+			$("#copyright").css("bottom", "10px");
+		    document.execCommand("stop");
+		} else {
+			setTimeout(function () {
+				startHeartAnimation();
+			}, 1000);
 
-      // 地点
-      var qiShan = new BMap.Point(107.6312110000, 34.4469310000);
-      var xiAn = new BMap.Point(108.8813880000, 34.1432630000);
-      var changChun = new BMap.Point(125.2873520000, 43.8290560000);
-
-      var boyIcon = new BMap.Icon("http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png", new BMap.Size(30, 30));
-      var girlIcon = new BMap.Icon("http://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png", new BMap.Size(30, 30));
-
-      $("#start_btn").click(function () {
-        screenfull & screenfull.request();
-        $(this).remove();
-        init();
-        showPhotos();
-      })
-
-      function init() {
-        var music =  document.getElementById("music");
-        music.play();
-
-        map = new BMap.Map("map_canvas");
-        map.centerAndZoom(qiShan, 5);
-
-        // var mapStyle = {
-        //   style : "dark"  //设置地图风格为高端黑
-        // };
-        // console.log(map.setMapStyle)
-        // map.setMapStyle(mapStyle);
-      }
-
-      function showPhotos() {
-        var photos = [
-          {
-            boyPoint: qiShan,
-            girlPoint: qiShan,
-            photoPoint: qiShan,
-            photoName: 'first_meet.jpeg',
-            text: "在这里相识、相知、相恋，高中的生活充满了很多美好的回忆",
-            title: '2013年7月--相遇',
-          },
-          {
-            boyPoint: changChun,
-            girlPoint: xiAn,
-            photoPoint: changChun,
-            photoName: 'chang_chun.jpeg',
-            text: "从2006年开始我们开始长达7年的异地恋，我们来往于彼此所在的城市，享受着久别重逢时的喜悦",
-            title: '2009年7月--在长春',
-          }
-        ];
-
-        var i = 1, len = photos.length;
-        var p = photos[0];
-        showPhoto(p.boyPoint, p.girlPoint, p.photoPoint, p.photoName, p.text, p.title);
-
-        var timeout = setInterval(function () {
-          var p = photos[i];
-          showPhoto(p.boyPoint, p.girlPoint, p.photoPoint, p.photoName, p.text, p.title);
-          if (++i == len) {
-            clearInterval(timeout);
-          }
-        }, 5000);
-      }
-
-      function showPhoto(boyPoint, girlPoint, photoPoint, photoName, text, title) {
-        map.clearOverlays();
-        var boy = new BMap.Marker(boyPoint, {icon: boyIcon});
-        map.addOverlay(boy);
-        var girl = new BMap.Marker(girlPoint, {icon: girlIcon});
-        map.addOverlay(girl);
-
-        var opts = {
-          title : title,
-        }
-         var sContent =
-          "<div>" +
-          "<div><img style='float:left; margin:4px' id='imgDemo' src='photos/" + photoName + "' width='400' height='300' /></div>" +
-          "<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>" + text + "</p>";
-          "</div>";
-        var infoWindow = new BMap.InfoWindow(
-          sContent,
-          opts);  // 创建信息窗口对象
-        map.openInfoWindow(infoWindow, photoPoint);
-        if (boyPoint == girlPoint) {
-          boy.setAnimation(BMAP_ANIMATION_BOUNCE);
-        }
-      }
-    }();
-  </script>
+			adjustCodePosition();
+			$("#code").typewriter();
+		}
+	</script>
 </body>
 </html>

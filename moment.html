@@ -4,7 +4,7 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Love</title>
-  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&ak=7ynCSut8ATemfdUqd4Aawh76"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7ynCSut8ATemfdUqd4Aawh76"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <script type="text/javascript" src="js/screenfull.min.js"></script>
@@ -34,6 +34,8 @@
       var boyIcon = new BMap.Icon("photos/blue-dot.png", new BMap.Size(30, 30));
       var girlIcon = new BMap.Icon("photos/red-dot.png", new BMap.Size(30, 30));
 
+      var level = 5;
+
       // $("#start_btn").click(function () {
       //   screenfull & screenfull.request();
       //   $(this).remove();
@@ -45,7 +47,7 @@
         music.play();
 
         map = new BMap.Map("map_canvas");
-        map.centerAndZoom(qiShan, 5);
+        map.centerAndZoom(qiShan, level);
 
         // var mapStyle = {
         //   style : "dark"  //设置地图风格为高端黑
@@ -81,10 +83,11 @@
           // }
         ];
 
-        var i = 0, len = photos.length;
+        var len = photos.length;
         var p = photos[0];
         showPhoto(p.boyPoint, p.girlPoint, p.photoPoint, p.photoName, p.text, p.title);
-        i = 1;
+
+        var i = 1;
         var timeout = setInterval(function () {
           var p = photos[i];
           showPhoto(p.boyPoint, p.girlPoint, p.photoPoint, p.photoName, p.text, p.title);
@@ -103,15 +106,17 @@
         map.addOverlay(girl);
 
         var opts = {
-          title : title,
+          title: title,
         }
         var sContent =
           "<div class='love-img'>" +
-          "<div><img style='float:left; margin:4px' id='imgDemo' src='photos/" + photoName + "' width='400' height='auto' /></div>" +
+          "<div><img src='photos/" + photoName + "' width='400' height='300' /></div>" +
           "<div class='love-desc'>" + text + "</div>";
           "</div>";
 
         var infoWindow = new BMap.InfoWindow(sContent, opts);
+        infoWindow.setWidth(400);
+        infoWindow.setHeight(350);
         map.openInfoWindow(infoWindow, photoPoint);
 
         if (boyPoint == girlPoint) {

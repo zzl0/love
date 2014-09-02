@@ -61,12 +61,12 @@
 
 		var name = getQueryString("name");
 
-		if (name === null) {
+		if (name == "null") {
 			name = "亲爱的朋友"
 		} else {
-			name = "亲爱的" + name + ":";
+			name = "亲爱的" + name;
 		}
-		document.getElementById("name").innerHTML = name;
+		document.getElementById("name").innerHTML = name + ":";
 
 		var offsetX = $("#loveHeart").width() / 2;
 		var offsetY = $("#loveHeart").height() / 2 - 55;

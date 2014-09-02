@@ -32,6 +32,8 @@
       var france = new BMap.Point(2.2, 48.52);
       var yangZhou = new BMap.Point(119.4277780000, 32.4085050000);
       var shenZhen = new BMap.Point(114.0259740000, 22.5460540000);
+      var zhuJiaZhuang = new BMap.Point(107.7896630000, 34.4941340000);
+
 
       var boyIcon = new BMap.Icon("photos/blue-dot.png", new BMap.Size(30, 30));
       var girlIcon = new BMap.Icon("photos/red-dot.png", new BMap.Size(30, 30));
@@ -115,12 +117,12 @@
             title: "2013--扬州"
           },
           {
-            boyPoint: beiJing,
-            girlPoint: beiJing,
-            photoPoint: beiJing,
+            boyPoint: zhuJiaZhuang,
+            girlPoint: zhuJiaZhuang,
+            photoPoint: zhuJiaZhuang,
             photoName: 'marry.jpg',
             height: 340,
-            text: "结婚了",
+            text: "结婚了，我们在此恭候你的光临！",
             title: "2014--结婚"
           }
         ];
@@ -133,12 +135,13 @@
           var i = 1;
           var timeout = setInterval(function () {
             var p = photos[i];
-            showPhoto(p);
-
-            if (++i == len) {
+            if (++i == len + 1) {
               clearInterval(timeout);
+            } else {
+              showPhoto(p);
             }
           }, 5000);
+
         }
       }
 

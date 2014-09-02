@@ -19,17 +19,14 @@
 	<div id="mainDiv">
 		<div id="content">
 			<div id="code">
-				<span class="space"/><span class="comments"> 2003年，我们相识. </span><br />
-				<span class="space"/><span class="comments"> 2004年，小强老师的帮助下我们成了同桌. </span><br />
-				<span class="space"/><span class="comments"> 2005年，青春期的我们相恋了. </span><br />
-				<span class="space"/><span class="comments"> 2006年，我们开始了异地恋. </span><br />
-				<span class="space"/><span class="comments"> 期间，我们来往于彼此的城市，为了那短暂的相聚. </span><br />
-				<span class="space"/><span class="comments"> 2010年，我本科毕业，你去了法国，我们离的更远了，不过我们坚持下来了. </span><br />
-				<span class="space"/><span class="comments"> 2013年，我们相聚在北京，开始了幸福（辛苦）的北漂生活.</span><br />
-				<span class="space"/><span class="comments"> 2014年，我们结婚了. </span><br />
+				<div class="title"> 结婚请柬 </div><br />
+				<span class="space"/><span class="comments" id="name"></span><br /><br />
+				<span class="space"/><span class="comments"> 我们在此诚挚的邀请你参加我们的婚礼</span><br />
+				<span class="space"/><span class="comments"> 地点：陕西宝鸡市岐山县祝家庄上营一组</span><br />
+				<span class="space"/><span class="comments"> 时间：2014-10-03</span><br />
 				</br>
 				<span class="space"/><span class="comments">
-					<a href="moment.html" style="color:red;">这里</a>是图片，慎点.
+					<a href="moment.html" style="color:red;">这里</a>是我们的一些照片（多图，使用手机时慎点 ^_^）.
 				</span><br />
 			</div>
 			<div id="loveHeart">
@@ -54,6 +51,23 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		function getQueryString(name) {
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		    var r = window.location.search.substr(1).match(reg);
+		    if (r != null)
+		    	return decodeURI(r[2]).replace("/", "");
+		    return null;
+		}
+
+		var name = getQueryString("name");
+
+		if (name === null) {
+			name = "亲爱的朋友"
+		} else {
+			name = "亲爱的" + name + ":";
+		}
+		document.getElementById("name").innerHTML = name;
+
 		var offsetX = $("#loveHeart").width() / 2;
 		var offsetY = $("#loveHeart").height() / 2 - 55;
 
@@ -74,6 +88,8 @@
 			adjustCodePosition();
 			$("#code").typewriter();
 		}
+
+
 	</script>
 </body>
 </html>
